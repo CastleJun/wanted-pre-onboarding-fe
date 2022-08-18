@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getToken } from '../utils/storage';
+import { clearStorage, getToken } from '../utils/storage';
 import { useNavigate } from 'react-router-dom';
 import { Api } from '../api/api';
 import axios, { AxiosError } from 'axios';
@@ -102,8 +102,17 @@ export const Todos = () => {
     }
   };
 
+  const handleLogout = () => {
+    clearStorage();
+    navigate('/')
+  }
   return (
     <FlexDivWrap>
+      <LogOutButton onClick={handleLogout}>
+        <Text color={colors.grey500} fontSize='S4' fontWeight='regular'>
+          로그아웃
+        </Text>
+      </LogOutButton>
       <Text color={colors.primary700} fontSize='XL3' fontWeight='regular'>
         To Do List
       </Text>
@@ -129,6 +138,7 @@ const FlexDivWrap = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 20px;
+  position: relative;
 `;
 
 const TodoListDivWrap = styled.div`
@@ -160,4 +170,12 @@ const InputWrap = styled.input`
   border: 1px solid ${colors.grey700};
   height: 40px;
   border-radius: 3px;
+`;
+
+const LogOutButton = styled.button`
+  background: unset;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
 `;
